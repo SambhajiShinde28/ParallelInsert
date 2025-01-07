@@ -4,20 +4,20 @@ from django.db import models
 # Create your models here.
 
 class UserModel(models.Model):
-    Id = models.AutoField(primary_key=True)
+    id = models.IntegerField(primary_key=True)
     User_Name = models.CharField(max_length=100)
     User_Email = models.EmailField()
 
     def __str__(self):
-        return str(self.Id) 
+        return str(self.id) 
 
 class ProductModel(models.Model):
-    Id = models.AutoField(primary_key=True)
+    id = models.IntegerField(primary_key=True)
     Product_Name = models.CharField(max_length=100)
     Product_Price = models.FloatField()
 
     def __str__(self):
-        return str(self.Id) 
+        return str(self.id) 
 
 class OrderModel(models.Model):
     Id = models.AutoField(primary_key=True)
