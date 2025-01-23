@@ -21,8 +21,8 @@ class ProductModel(models.Model):
 
 class OrderModel(models.Model):
     Id = models.AutoField(primary_key=True)
-    User_Id = models.ForeignKey(UserModel, on_delete=models.CASCADE)
-    Product_Id = models.ForeignKey(ProductModel, on_delete=models.CASCADE)
+    User_Id = models.ForeignKey(UserModel, on_delete=models.CASCADE, null=True, blank=True)
+    Product_Id = models.ForeignKey(ProductModel, on_delete=models.CASCADE, null=True, blank=True)
     quantity = models.IntegerField()
 
     def __str__(self):

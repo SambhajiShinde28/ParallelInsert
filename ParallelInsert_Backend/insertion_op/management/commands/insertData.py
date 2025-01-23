@@ -57,13 +57,13 @@ def is_valid_email(email):
 def insert_users():
     for user in users_data:
         try:
-            if not user.get("id") or not user.get("User_Name") or not user.get("User_Email"):
+            '''if not user.get("id") or not user.get("User_Name") or not user.get("User_Email"):
                 print(f"Invalid data for user: {user}. Skipping due to missing fields.")
                 continue
 
             if not is_valid_email(user["User_Email"]):
                 print(f"Invalid email format for user: {user['User_Name']} ({user['User_Email']}). Skipping.")
-                continue
+                continue'''
             
             UserModel.objects.create(**user)
             print(f"User {user['User_Name']} inserted successfully.")
@@ -75,13 +75,13 @@ def insert_users():
 def insert_products():
     for product in products_data:
 
-        if not product.get("id") or not product.get("Product_Name") or not product.get("Product_Price"):
+        '''if not product.get("id") or not product.get("Product_Name") or not product.get("Product_Price"):
             print(f"Invalid data for Product: {product}. Skipping due to missing fields.")
             continue
 
         if product["Product_Price"] < 0:
             print(f"Invalid product price for {product['Product_Name']}, skipping.")
-            continue
+            continue'''
 
         try:
             ProductModel.objects.create(**product)
@@ -93,16 +93,17 @@ def insert_products():
 
 def insert_orders():
     for order in orders_data:
-        if order["quantity"] <= 0:
+        '''if order["quantity"] <= 0:
             print(f"Invalid order quantity for Order ID {order}, skipping.")
-            continue
+            continue'''
         try:
+
             user_instance = UserModel.objects.filter(id=order["User_Id"]).first()
             product_instance = ProductModel.objects.filter(id=order["Product_Id"]).first()
             
-            if not user_instance or not product_instance:
+            '''if not user_instance or not product_instance:
                 print(f"Invalid data for order: {order}. Skipping due to missing fields.")
-                continue
+                continue'''
 
             OrderModel.objects.create(User_Id=user_instance, Product_Id=product_instance, quantity=order["quantity"])
             print(f"Order {order} inserted successfully.")
@@ -121,10 +122,11 @@ class Command(BaseCommand):
         t3=threading.Thread(target=insert_orders)
 
         t1.start()
-        t2.start()
         t1.join()
+
+        t2.start()
         t2.join()
-        
+    
         t3.start()
         t3.join()
 
